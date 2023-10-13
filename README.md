@@ -13,33 +13,34 @@ Note: For AKS, when creating your AKS cluster, make sure you select Zones 1, 2, 
 
 Confirm you Kubernetes cluster nodes reside on different zones.
 In the below example, our EKS cluster nodes are running in us-east-2a, us-east-2c, us-east-2c:
+```
 kubectl get nodes -L topology.kubernetes.io/zone
 NAME                                           STATUS     ROLES      AGE    VERSION                   ZONE   
 ip-172-34-123-123-us-east-2.compute.internal   Ready       <none>    5m     v1.25.12-eks-8cccc123     us-east-2a
 ip-172-34-123-124-us-east-2.compute.internal   Ready       <none>    5m     v1.25.12-eks-8cccc123     us-east-2b
 ip-172-34-123-125-us-east-2.compute.internal   Ready       <none>    5m     v1.25.12-eks-8cccc123     us-east-2c
-
+```
 # Deploy Consul
 
 
 
 # Configure three instances of the Counting service to run in three different zones.
 
-In the Deployment of your counting-zone1.yaml file, edit the topology.kubernetes.io/zone field with your first zone, example us-east-2a.
+In the Deployment of your counting-zone1.yaml file, edit the ```topology.kubernetes.io/zone``` field with your first zone, example us-east-2a.
 ```
       nodeSelector:
         topology.kubernetes.io/zone: <YOUR_FIRST_ZONE>
 ```
 
 
-In the Deployment of your counting-zone2.yaml file, edit the topology.kubernetes.io/zone field with your second zone, example us-east-2b.
+In the Deployment of your counting-zone2.yaml file, edit the ```topology.kubernetes.io/zone``` field with your second zone, example us-east-2b.
 
 ```
       nodeSelector:
         topology.kubernetes.io/zone: <YOUR_SECOND_ZONE>
 ```
 
-Lastly, in the Deployment of your counting-zone3.yaml file, edit the topology.kubernetes.io/zone field with your third zone, example us-east-2c.
+Lastly, in the Deployment of your counting-zone3.yaml file, edit the ```topology.kubernetes.io/zone``` field with your third zone, example us-east-2c.
 
 ```
       nodeSelector:
