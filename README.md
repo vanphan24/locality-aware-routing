@@ -95,14 +95,14 @@ Open browser to ```http://localhost:9002``` and confirm counter is incrementing 
 
 Deploy the second counting instance.
 ```
-kubectl apply -f counting-zone2.yaml -f counting-zone2.yaml 
+kubectl apply -f counting-zone2.yaml 
 ```
 
 Refresh the browser and confirm the counter on the Dashboard is not incrementing sequencially. This would confirm the dashboard service is reflecting the counter from different instances in different zones.
 
 Deploy the third counting instance.
 ```
-kubectl apply -f counting-zone3.yaml -f counting-zone3.yaml 
+kubectl apply -f counting-zone3.yaml 
 ```
 
 Refresh the browser several times and confirm the counter is from all three zones.
