@@ -26,7 +26,10 @@ ip-172-31-46-215.us-east-2.compute.internal   Ready       <none>    5m     v1.25
 # Deploy Consul
 
 Clone repo
-```git clone 
+```git clone https://github.com/vanphan24/locality-aware-routing.git```
+
+Navigate to clones directory
+```cd locality-aware-routing```
 
 Set Consul license 
 ```
