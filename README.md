@@ -4,12 +4,15 @@ This repo will walk you through how to to configure locality aware routing on a 
 
 # Pre-reqs
 
+Locality Aware Routing is an enterprise feature and will require an Enterprise license.
+
 We will use AWS EKS in this example but the same concepts can apply to any cloud managed Kubernetes cluster, like Azure AKS (which may be quicker to deploy).
 If using AWS EKS, your AWS VPC will need to have three separate subnets, each in a different Availability Zone. For Azure, an AKS cluster can be created without the need to explcitily create subnets in separate zones.
 
 Create a EKS or AKS Kubernetes cluster. In the cluster creation...
-      For EKS, select all three subnets (that belong to the different zones)
-      For AKS, when creating your AKS cluster, make sure you select Zones 1, 2, 3 for the Availability Zones field.
+- For EKS, select all three subnets (that belong to the different zones).
+        
+- For AKS, when creating your AKS cluster, make sure you select Zones 1, 2, 3 for the Availability Zones field.
 
 Confirm you Kubernetes cluster nodes reside on different zones.
 In the below example, our EKS cluster nodes are running in us-east-2a, us-east-2c, us-east-2c:
@@ -22,12 +25,9 @@ ip-172-31-46-215.us-east-2.compute.internal   Ready       <none>    5m     v1.25
 ```
 # Deploy Consul
 
-Create and set Consul license 
+Set Consul license 
 ```
-export CONSUL_LICENSE=<ADD_YOUR_LICENSE_HERE>
-```
-```
-kubectl create secret generic license --from-literal=key=$CONSUL_LICENSE
+kubectl create secret generic license --from-literal=key=<ADD_YOUR_LICENSE_HERE>
 ```
 Deploy Consul
 ```
