@@ -126,4 +126,4 @@ Next, using a proxy-default config entry, we will enable localtiy aware routing,
 kubectl apply -f proxy-default-locality.yaml
 ```
 
-Refresh the browser several times and confirm the counter is from all three zones.
+Refresh the browser several times and confirm the dashboard is showing that the counter is *ONLY* from one single zone.
