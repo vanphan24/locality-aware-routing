@@ -80,7 +80,9 @@ Lastly, in the Deployment of your counting-zone3.yaml file, edit the ```topology
         topology.kubernetes.io/zone: <YOUR_THIRD_ZONE>
 ```
 
-# Deploy both the dashboard and the first counting service.
+# Deploy Counting App
+
+Deploy both the dashboard and the first counting service.
 ```
 kubectl apply -f dashboard.yaml -f counting-zone1.yaml 
 ```
