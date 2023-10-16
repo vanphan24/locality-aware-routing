@@ -107,9 +107,6 @@ Deploy the third counting instance.
 kubectl apply -f counting-zone3.yaml 
 ```
 
-Refresh the browser several times and confirm the counter is from all three zones.
-You can also confirm the zone by the name of the counter pod beneath the number count.
-
 Confirm all three counting instances are running on different nodes:
 ```
 kubectl get pod -o wide
@@ -119,6 +116,9 @@ counting-zone2-b9897fb5c-cqjkr                        2/2     Running    0      
 counting-zone3-cf8765cd4-lvvq8                        2/2     Running    0          3m20s   172.31.38.124   ip-172-31-46-215.us-east-2.compute.internal 
 dashboard-64f7f8cb5-kp498                             2/2     Running    0          2m10s   172.31.25.179   ip-172-31-29-111.us-east-2.compute.internal
 ```
+
+Refresh the browser several times and confirm the counter is from all three zones.
+You can also confirm the zone by the name of the counter pod beneath the number count.
 
 Next, using a proxy-default config entry, we will enable localtiy aware routing, and traffic will only go to the couting service in the same zone as the dashboard service.
 
