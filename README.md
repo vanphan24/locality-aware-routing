@@ -16,31 +16,54 @@ In the below example, our EKS cluster nodes are running in us-east-2a, us-east-2
 ```
 kubectl get nodes -L topology.kubernetes.io/zone
 NAME                                           STATUS     ROLES      AGE    VERSION                   ZONE   
-ip-172-34-123-123-us-east-2.compute.internal   Ready       <none>    5m     v1.25.12-eks-8cccc123     us-east-2a
-ip-172-34-123-124-us-east-2.compute.internal   Ready       <none>    5m     v1.25.12-eks-8cccc123     us-east-2b
-ip-172-34-123-125-us-east-2.compute.internal   Ready       <none>    5m     v1.25.12-eks-8cccc123     us-east-2c
+ip-172-31-2-109.us-east-2.compute.internal    Ready       <none>    5m     v1.25.12-eks-8cccc123     us-east-2a
+ip-172-31-29-111.us-east-2.compute.internal   Ready       <none>    5m     v1.25.12-eks-8cccc123     us-east-2b
+ip-172-31-46-215.us-east-2.compute.internal   Ready       <none>    5m     v1.25.12-eks-8cccc123     us-east-2c
 ```
 # Deploy Consul
+
+Create and set Consul license 
+```
+export CONSUL_LICENSE=<ADD_YOUR_LICENSE_HERE>
+```
+```
+kubectl create secret generic license --from-literal=key=$CONSUL_LICENSE
+```
+Deploy Consul
+```
+helm install consul hashicorp/consul --version 1.3.0-rc1 --values consul-value.yaml 
+```
+Confirm Consul install
+```
+kubectl get pod
+NAME                                                  READY   STATUS    RESTARTS   AGE
+consul-consul-connect-injector-5db9db87d9-rlxhn       1/1     Running   0          5m
+consul-consul-mesh-gateway-78b89c7b6-nj22p            1/1     Running   0          5m
+consul-consul-server-0                                1/1     Running   0          5m
+consul-consul-webhook-cert-manager-58db5d5ddd-6wmgm   1/1     Running   0          5m
+```
+
+
 
 
 
 # Configure three instances of the Counting service to run in three different zones.
 
-In the Deployment of your counting-zone1.yaml file, edit the ```topology.kubernetes.io/zone``` field with your first zone, example us-east-2a.
+In the Deployment of your counting-zone1.yaml file, edit the ```topology.kubernetes.io/zone``` field with your first zone, example for AWS zone ```us-east-2a```.
 ```
       nodeSelector:
         topology.kubernetes.io/zone: <YOUR_FIRST_ZONE>
 ```
 
 
-In the Deployment of your counting-zone2.yaml file, edit the ```topology.kubernetes.io/zone``` field with your second zone, example us-east-2b.
+In the Deployment of your counting-zone2.yaml file, edit the ```topology.kubernetes.io/zone``` field with your second zone, example for AWS zone ```us-east-2b```.
 
 ```
       nodeSelector:
         topology.kubernetes.io/zone: <YOUR_SECOND_ZONE>
 ```
 
-Lastly, in the Deployment of your counting-zone3.yaml file, edit the ```topology.kubernetes.io/zone``` field with your third zone, example us-east-2c.
+Lastly, in the Deployment of your counting-zone3.yaml file, edit the ```topology.kubernetes.io/zone``` field with your third zone, example for AWS zone ```us-east-2c```.
 
 ```
       nodeSelector:
@@ -74,6 +97,16 @@ kubectl apply -f counting-zone3.yaml -f counting-zone3.yaml
 
 Refresh the browser several times and confirm the counter is from all three zones.
 You can also confirm the zone by the name of the counter pod beneath the number count.
+
+Confirm all three counting instances are running on different nodes:
+```
+kubectl get pod -o wide
+NAME                                                  READY   STATUS     RESTARTS   AGE     IP              NODE 
+counting-zone1-f5b764fb6-4cjrl                        2/2     Running    0          2m10s   172.31.0.64     ip-172-31-2-109.us-east-2.compute.internal            
+counting-zone2-b9897fb5c-cqjkr                        2/2     Running    0          2m45s   172.31.30.109   ip-172-31-29-111.us-east-2.compute.internal   
+counting-zone3-cf8765cd4-lvvq8                        2/2     Running    0          3m20s   172.31.38.124   ip-172-31-46-215.us-east-2.compute.internal 
+dashboard-64f7f8cb5-kp498                             2/2     Running    0          2m10s   172.31.25.179   ip-172-31-29-111.us-east-2.compute.internal
+```
 
 Next, using a proxy-default config entry, we will enable localtiy aware routing, and traffic will only go to the couting service in the same zone as the dashboard service.
 
