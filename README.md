@@ -59,28 +59,28 @@ consul-consul-webhook-cert-manager-58db5d5ddd-6wmgm   1/1     Running   0       
 
 # Configure three instances of the Counting service to run in three different zones.
 
-In the Deployment of your counting-zone1.yaml file, edit the ```topology.kubernetes.io/zone``` field with your first zone, example for AWS zone ```us-east-2a```.
+In the Deployment of your counting-zone1.yaml file, edit the ```topology.kubernetes.io/zone``` field with your first zone. For example, an AWS zone would be ```us-east-2a```.
 ```
       nodeSelector:
         topology.kubernetes.io/zone: <YOUR_FIRST_ZONE>
 ```
 
 
-In the Deployment of your counting-zone2.yaml file, edit the ```topology.kubernetes.io/zone``` field with your second zone, example for AWS zone ```us-east-2b```.
+In the Deployment of your counting-zone2.yaml file, edit the ```topology.kubernetes.io/zone``` field with your second zone. For example, an AWS zone would be ```us-east-2b```.
 
 ```
       nodeSelector:
         topology.kubernetes.io/zone: <YOUR_SECOND_ZONE>
 ```
 
-Lastly, in the Deployment of your counting-zone3.yaml file, edit the ```topology.kubernetes.io/zone``` field with your third zone, example for AWS zone ```us-east-2c```.
+Lastly, in the Deployment of your counting-zone3.yaml file, edit the ```topology.kubernetes.io/zone``` field with your third zone. For example, an AWS zone would be ```us-east-2c```.
 
 ```
       nodeSelector:
         topology.kubernetes.io/zone: <YOUR_THIRD_ZONE>
 ```
 
-# Deploy both the dashboard and counting service in the first availabiltiy zone.
+# Deploy both the dashboard and the first counting service.
 ```
 kubectl apply -f dashboard.yaml -f counting-zone1.yaml 
 ```
