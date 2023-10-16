@@ -127,3 +127,16 @@ kubectl apply -f proxy-default-locality.yaml
 ```
 
 Refresh the browser several times and confirm the dashboard is showing that the counter is *ONLY* from one single zone.
+
+# Cleanup
+```
+kubectl delete -f dashboard.yaml -f counting-zone1.yaml -f counting-zone2.yaml -f counting-zone3.yaml -f proxy-default-locality.yaml
+```
+Uninstall Consul using consul-k8s cli
+```
+consul-k8s uninstall -auto-approve -wipe-data
+```
+or uninstall using helm
+```
+helm uninstall consul
+```
