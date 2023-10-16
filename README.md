@@ -25,6 +25,9 @@ ip-172-31-46-215.us-east-2.compute.internal   Ready       <none>    5m     v1.25
 ```
 # Deploy Consul
 
+Clone repo
+```git clone 
+
 Set Consul license 
 ```
 kubectl create secret generic license --from-literal=key=<ADD_YOUR_LICENSE_HERE>
