@@ -90,7 +90,7 @@ Run port-forward on dashboard service to confirm dashboard can reach counting
 kubectl port-forward service/dashboard 9002:9002 
 ```
 
-Open browser, to ```http://localhost:9002``` and confirm counter is incrementing on the Dashbaord web UI.
+Open browser to ```http://localhost:9002``` and confirm counter is incrementing on the Dashbaord web UI.
 
 
 Deploy the second counting instance.
